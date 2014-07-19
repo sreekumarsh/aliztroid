@@ -21,12 +21,18 @@ public class SceneManager {
 	 * Navigates from the current scene to the next scene.
 	 * @param scene The next scene type GameScene
 	 * @param fade Boolean that determines whether to add fade effect
+	 * @throws InterruptedException 
 	 */
-	public void NextScene(GameScene scene,boolean fade)
+	public static void NextScene(GameScene scene,boolean fade)
 	{
-		if(currentScene!=null)
+		if(currentScene!=null && currentScene.isAlive())
 		{
-			currentScene.Unload();
+			try {
+				currentScene.finishScene();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		currentScene = scene;
 		currentScene.Load();

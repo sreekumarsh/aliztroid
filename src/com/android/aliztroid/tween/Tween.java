@@ -1,6 +1,6 @@
 package com.android.aliztroid.tween;
 
-import com.android.aliztroid.ui.scene.objects.Sprite;
+import com.android.aliztroid.ui.Sprite;
 
 
 /**

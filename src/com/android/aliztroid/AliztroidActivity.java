@@ -5,9 +5,11 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import com.android.aliztroid.ui.Configurations;
+import com.android.aliztroid.listeners.OnSceneChangedListener;
+import com.android.aliztroid.texture.Textures;
 import com.android.aliztroid.ui.scene.GameScene;
 import com.android.aliztroid.ui.scene.SceneManager;
+import com.android.aliztroid.utils.Configurations;
 
 
 /**
@@ -17,7 +19,7 @@ import com.android.aliztroid.ui.scene.SceneManager;
  *
  */
 
-public abstract class AliztroidActivity extends Activity{
+public abstract class AliztroidActivity extends Activity implements OnSceneChangedListener{
 	
 	private Aliztroid alistroid;
 	public Point TouchPoint;
@@ -30,24 +32,18 @@ public abstract class AliztroidActivity extends Activity{
         alistroid.Initialize();
         TouchPoint = new Point();
         SetLandscape();
+        Textures.loadTextures();
         onGameStart();
         
     }
     /**
      * Adds a scene to the game
      * @param scene
+     * @throws InterruptedException 
      */
     public void AddScene(GameScene scene)
     {
     	alistroid.AddScene(scene);
-    }
-    /**
-     * Called when a scene is finished
-     * @param scene
-     */
-    public static void onFinishScene(GameScene scene)
-    {
-    	//should be ovverriden 
     }
     
     
@@ -67,8 +63,8 @@ public abstract class AliztroidActivity extends Activity{
     {
     	
     	Configurations.orientation = Configurations.LANDSCAPE;
-    	Configurations.gameWidth = Configurations.height;
-   		Configurations.gameHeight = Configurations.width;
+    	Configurations.gameWidth = Configurations.width;
+   		Configurations.gameHeight = Configurations.height;
     }
     /**
      * Set the orientation of view to potrait
@@ -103,8 +99,8 @@ public abstract class AliztroidActivity extends Activity{
     	
     	if(Configurations.orientation == Configurations.LANDSCAPE)
     	{
-    		x = Configurations.gameWidth - event.getY();
-    		y = event.getX();
+    		x = event.getX();
+    		y = event.getY();
     	}
     	else
     	{

@@ -6,11 +6,13 @@ import android.opengl.GLSurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.android.aliztroid.ui.Configurations;
-import com.android.aliztroid.ui.TextureLibrary;
-import com.android.aliztroid.ui.opengl.renderer;
+import com.android.aliztroid.text.GLTextLoader;
+import com.android.aliztroid.texture.TextureLibrary;
+import com.android.aliztroid.ui.opengl.AliztroidRenderer;
 import com.android.aliztroid.ui.scene.GameScene;
 import com.android.aliztroid.ui.scene.SceneManager;
+import com.android.aliztroid.utils.Config;
+import com.android.aliztroid.utils.Configurations;
 /**
  * The main class of the engine
  * @author Sreekumar SH
@@ -20,7 +22,6 @@ public class Aliztroid {
 	
 	public SceneManager manager;
 	static Activity  activity;
-	TextureLibrary textLib;
 	
 	public static int spriteId;
 	
@@ -52,9 +53,10 @@ public class Aliztroid {
    		
    		spriteId = 0;
    		
-		textLib = new TextureLibrary();
+		//textLib = new TextureLibrary();
+		GLTextLoader.load(activity, Config.FONT_FILE, Config.FONT_SIZE);
         GLSurfaceView view = new GLSurfaceView(activity);
-   		view.setRenderer(new renderer());
+   		view.setRenderer(new AliztroidRenderer(activity));
    		activity.setContentView(view);
    		
    		
@@ -71,17 +73,17 @@ public class Aliztroid {
 	 */
 	public void start()
 	{
-		manager = new SceneManager();
 		
 		
 	}
 	/**
 	 * To add a new scene to the game and make it as the current scene.
 	 * @param scene GameScene the scene to be added.
+	 * @throws InterruptedException 
 	 */
 	public void AddScene(GameScene scene)
 	{
-		manager.NextScene(scene, false);
+		SceneManager.NextScene(scene, false);
 	}
 	
 	/**

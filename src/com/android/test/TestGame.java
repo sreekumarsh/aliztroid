@@ -1,26 +1,28 @@
 package com.android.test;
 
+import com.android.aliztroid.listeners.OnSceneChangedListener;
+import com.android.aliztroid.texture.Texture;
+import com.android.aliztroid.ui.Graphic;
+import com.android.aliztroid.ui.Sprite;
+import com.android.aliztroid.ui.components.AlizterButton;
 import com.android.aliztroid.ui.scene.GameScene;
-import com.android.aliztroid.ui.scene.objects.Button;
-import com.android.aliztroid.ui.scene.objects.Graphic;
-import com.android.aliztroid.ui.scene.objects.Sprite;
-import com.android.aliztroid.ui.scene.objects.Texture;
 
 public class TestGame extends GameScene{
 
-	Button spr;  // just a sprite 
+	AlizterButton spr;  // just a sprite 
 	Graphic explode;
-	public TestGame()
+	public TestGame(OnSceneChangedListener listener)
 	{
+		super(listener);
 		Texture text = new Texture("debates.png");
 		Texture texo = new Texture("debates_over.png");
-		spr = new Button(10,10,100,80,text,texo);
+		spr = new AlizterButton(10,10,100,80,text,texo);
 		spr.SetName("debate");
 		SetBackGround("bgm.png");
 		explode = new Graphic(100,100,2,6,12,new Texture("explosion.png"));
 		explode.SetName("explode");
-		AddSprite(explode);  //add a sprite to the screen so that its drawn
-		AddSprite(spr);
+		add(explode);  //add a sprite to the screen so that its drawn
+		add(spr);
 		AddListener(explode);  // to listen for the touch events
 		
 		AddListener(spr);
